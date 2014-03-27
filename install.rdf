@@ -2,12 +2,12 @@
 <r:RDF xmlns="http://www.mozilla.org/2004/em-rdf#"
        xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <r:Description about="urn:mozilla:install-manifest">
-    <creator>Edward Lee (Mardak)</creator>
+    <creator>ndossougbe</creator>
     <description>Example restartless add-on</description>
-    <homepageURL>http://ed.agadak.net/</homepageURL>
-    <id>restartless@agadak.net</id>
+    <homepageURL>https://github.com/ndossougbe/restartless</homepageURL>
+    <id>toolazy@for.that</id>
     <name>Restartless</name>
-    <version>1</version>
+    <version>0.1</version>
 
     <bootstrap>true</bootstrap>
     <type>2</type>
