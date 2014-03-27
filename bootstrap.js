@@ -34,10 +34,59 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+const {classes: Cc, interfaces: Ci, utils: Cu} = Components;
+Cu.import("resource://gre/modules/AddonManager.jsm");
+Cu.import("resource://gre/modules/Services.jsm");
+
+
+/**
+ * Swap 1st and 2nd elements of 'intl.accept_languages'
+ */
+function toggleLocale(addon) {
+  let application = Cc["@mozilla.org/fuel/application;1"].getService(Ci.fuelIApplication);
+  mLog(application.prefs.get("extensions.xulschoolhello.message.count").value);
+  mLog(application.prefs.get("intl.accept_languages").value);
+
+  let alElements = application.prefs.get("intl.accept_languages").value.split(',');
+
+  let tmp = alElements[0];
+  alElements[0] = alElements[1];
+  alElements[1] = tmp;
+
+  application.prefs.get("intl.accept_languages").value = alElements.join(',');
+
+  let newValue = application.prefs.get("intl.accept_languages").value
+  // mLog(JSON.stringify(application.prefs.get("intl.accept_languages")));
+  mLog('New value: ' + newValue);
+  return newValue;
+}
+
+/**
+ *Logging
+ */
+function mLog(msg) {
+  Cc["@mozilla.org/consoleservice;1"]
+    .getService(Ci.nsIConsoleService)
+    .logStringMessage("== "+msg);
+}
+
 /**
  * Handle the add-on being activated on install/enable
  */
-function startup(data, reason) {}
+function startup({id}, reason) AddonManager.getAddonByID(id, function(addon) {
+  let gBrowser = Services.wm.getMostRecentWindow("navigator:browser").gBrowser;
+  let {alert} = gBrowser.selectedBrowser.contentWindow;
+
+  try {
+    let newValue = toggleLocale(addon);
+    alert('Execution OK.\nNew value for intl.accept_languages: "'+ newValue + '".');
+  } catch (ex) {
+    alert('An error occurred: ' + ex);
+  } finally {
+    // One-time script: auto-disable after running
+    addon.userDisabled = true;
+  }
+})
 
 /**
  * Handle the add-on being deactivated on uninstall/disable

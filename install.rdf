@@ -3,10 +3,13 @@
        xmlns:r="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <r:Description about="urn:mozilla:install-manifest">
     <creator>ndossougbe</creator>
-    <description>Example restartless add-on</description>
+    <description>
+Quick and dirty web content language switcher. It disables itself after switch, that's the
+expected behavior! It just swaps the first two locales of 'intl.accept_languages' and quits.
+    </description>
     <homepageURL>https://github.com/ndossougbe/restartless</homepageURL>
     <id>toolazy@for.that</id>
-    <name>Restartless</name>
+    <name>Locale Switch</name>
     <version>0.1</version>
 
     <bootstrap>true</bootstrap>
